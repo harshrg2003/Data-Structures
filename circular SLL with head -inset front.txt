@@ -1,0 +1,125 @@
+#include<stdio.h>
+
+#include<stdlib.h>
+
+struct node
+
+{
+
+   int info;
+
+   struct node *link;
+
+};
+
+typedef struct node* NODE;
+
+ NODE getnode()
+
+ {
+
+    NODE x;
+
+    x=(NODE)malloc(sizeof(struct node));
+
+    if(x==NULL)
+
+    {
+
+       printf("Memory not allocated\n");
+
+       exit(0);
+
+    }
+
+     return x;
+
+ }
+
+ void insert_front(NODE head,int item)
+
+ {
+
+   
+
+   NODE temp;
+
+   temp=getnode();
+
+   temp->info=item;
+
+   NODE next;
+
+   next=head->link;
+
+   head->link=temp;
+
+   temp->link=next;
+
+ }
+
+ void display(NODE head)
+
+ {
+
+   if(head->link==head)
+
+   {
+
+     printf("No elements\n");
+
+     return;
+
+   }
+
+   NODE p;
+
+   p=head->link;
+
+   
+
+   while(p!=head)
+
+   {
+
+     printf("%d\t",p->info);
+
+     p=p->link;
+
+   }
+
+ }    
+
+ int main()
+
+ {
+
+   NODE head;
+
+   head=getnode();
+
+   head->link=head;
+
+   int n,elem;
+
+   printf("Insert no of nodes\n");
+
+   scanf("%d",&n);
+
+   for(int i=0;i<n;i++)
+
+   {
+
+      printf("Enter the element\n");
+
+      scanf("%d",&elem);
+
+      insert_front(head,elem);
+
+   } 
+
+   display(head);
+
+   return 0;
+
+ }        

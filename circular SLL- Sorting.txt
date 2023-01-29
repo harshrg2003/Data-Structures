@@ -1,0 +1,226 @@
+#include<stdio.h>
+
+#include<stdlib.h>
+
+struct node
+
+{
+
+   int info;
+
+   struct node *link;
+
+};
+
+typedef struct node* NODE;
+
+ NODE getnode()
+
+ {
+
+    NODE x;
+
+    x=(NODE)malloc(sizeof(struct node));
+
+    if(x==NULL)
+
+    {
+
+       printf("Memory not allocated\n");
+
+       exit(0);
+
+    }
+
+     return x;
+
+ }
+
+ NODE insert_front(NODE last,int item)
+
+ {
+
+     NODE temp;
+
+     temp=getnode();
+
+     temp->info=item;
+
+     if(last==NULL)
+
+     {
+
+        last=temp;
+
+     }
+
+     else
+
+     {
+
+        temp->link=last->link;
+
+     }   
+
+        last->link=temp;
+
+        return last;
+
+ }
+
+ int count(NODE last)
+
+ {
+
+    int c=0;
+
+    NODE curr;
+
+    if(last==NULL)
+
+    {
+
+      return c;
+
+    }
+
+    if(last->link==last)
+
+    {
+
+       c++;
+
+       return c;
+
+    }
+
+    curr=last->link;
+
+    while(curr!=last)
+
+    {
+
+       c++;
+
+       curr=curr->link;
+
+    }
+
+     c++;
+
+     return c;
+
+ }
+
+ void sort(NODE last)
+
+ {
+
+    int n=count(last);
+
+    NODE first,next;
+
+    if(n==0||n==1)
+
+    {
+
+       printf("Sorting not possible\n");
+
+       return;
+
+    }
+
+    for(int i=0;i<n-1;i++)
+
+    {
+
+       first=last->link;
+
+       next=first->link;
+
+       do
+
+       {
+
+          if(first->info>next->info)
+
+          {
+
+            int t=first->info;
+
+            first->info=next->info;
+
+            next->info=t;
+
+          }
+
+          first=next;
+
+          next=first->link;
+
+       }while(first!=last);
+
+    }
+
+ }
+
+ void display(NODE last)
+
+ {
+
+     NODE p;
+
+     p=last->link;
+
+     while(p!=last)
+
+     {
+
+        printf("%d\t",p->info);
+
+        p=p->link;
+
+     }
+
+     printf("%d\t",p->info);
+
+  }      
+
+ int main()
+
+ {
+
+   NODE last=NULL;
+
+   int n,elem;
+
+   printf("Enter no of nodes\n");
+
+   scanf("%d",&n);
+
+   for(int i=0;i<n;i++)
+
+   {
+
+     printf("Enter the elem\n");
+
+     scanf("%d",&elem); 
+
+     last=insert_front(last,elem);
+
+   }
+
+   printf("Before sorting\n"); 
+
+   display(last);
+
+   sort(last);
+
+   printf("After sorting\n");
+
+   display(last);
+
+   return 0;
+
+ }  
+
